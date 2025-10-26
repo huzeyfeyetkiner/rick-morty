@@ -24,7 +24,7 @@ function FilterPart() {
 
 				<button
 					onClick={() => setIsFilterOpen(true)}
-					className="relative bg-primary-500  w-full h-full bg-[#F2F9FE] text-[#2196F3] p-2 rounded-md shadow-card-3 flex items-center justify-center"
+					className="relative bg-primary-500  w-full h-full bg-[#F2F9FE] text-[#2196F3] p-2 rounded-md shadow-card-3 flex items-center justify-center cursor-pointer"
 				>
 					<FilterIcon className="absolute top-1/2 left-4 -translate-y-1/2 w-4 h-4 md:relative md:top-0 md:left-0 md:translate-y-0" />
 					<p className="block md:hidden">Advanced Filters</p>
