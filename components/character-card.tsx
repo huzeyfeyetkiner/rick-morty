@@ -9,23 +9,23 @@ interface CharacterCardProps {
 function CharacterCard({ character }: CharacterCardProps) {
 	return (
 		<Link
-			href={`/character/${character.id}`}
+			href={`/character/${character?.id}`}
 			className="w-full bg-white rounded-sm shadow-card-3"
 		>
 			<div className="w-full h-80 relative ">
 				<Image
-					src={character.image}
-					alt={character.name}
+					src={character?.image || "/default-character.png"}
+					alt={character?.name || "Default Character"}
 					fill
 					className="w-full h-full object-cover"
 				/>
 			</div>
 			<div className="p-4">
 				<h2 className="text-lg text-[#000000DE] font-medium">
-					{character.name}
+					{character?.name || "Default Character"}
 				</h2>
 				<p className="text-sm text-[#00000099] font-medium">
-					{character.species}
+					{character?.species || "Default Species"}
 				</p>
 			</div>
 		</Link>

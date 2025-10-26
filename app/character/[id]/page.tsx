@@ -2,8 +2,10 @@ import { getCharacter } from "@/api/client"
 import BackButton from "@/components/back-button"
 import EpisodeCard from "@/components/episode-card"
 import ScrollTop from "@/components/scroll-top"
+import ChevronRight from "@/public/chevron-right"
 import { Character } from "@/types/character"
 import Image from "next/image"
+import Link from "next/link"
 import { notFound } from "next/navigation"
 
 async function CharacterPage({ params }: { params: Promise<{ id: string }> }) {
@@ -70,14 +72,25 @@ async function CharacterPage({ params }: { params: Promise<{ id: string }> }) {
 								{character?.origin.name}
 							</p>
 						</div>
-						<div className="flex flex-col items-start pb-2">
-							<p className="text-xl text-[#081F32] font-bold">
-								Location
-							</p>
-							<p className="text-base text-[#6E798C] font-bold">
-								{character?.location.name}
-							</p>
-						</div>
+						<Link
+							href={`/location/${character?.location.url
+								.split("/")
+								.pop()}`}
+							className="flex flex-row items-center justify-between pb-2"
+						>
+							<div className="flex flex-col items-start">
+								<p className="text-xl text-[#081F32] font-bold">
+									Location
+								</p>
+								<p className="text-base text-[#6E798C] font-bold">
+									{character?.location.name}
+								</p>
+							</div>
+
+							<div>
+								<ChevronRight />
+							</div>
+						</Link>
 					</div>
 				</div>
 

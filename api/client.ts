@@ -25,6 +25,15 @@ export const getCharacter = async (id: string) => {
 	}
 }
 
+export const getCharacterByUrl = async (url: string) => {
+	try {
+		const response = await client.get(url)
+		return response.data
+	} catch (error) {
+		return error
+	}
+}
+
 export const getEpisodes = async (page: number) => {
 	try {
 		const response = await client.get(`/episode?page=${page}`)
