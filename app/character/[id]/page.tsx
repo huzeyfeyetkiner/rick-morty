@@ -1,6 +1,7 @@
 import { getCharacter } from "@/api/client"
 import BackButton from "@/components/back-button"
 import EpisodeCard from "@/components/episode-card"
+import ScrollTop from "@/components/scroll-top"
 import { Character } from "@/types/character"
 import Image from "next/image"
 import { notFound } from "next/navigation"
@@ -90,6 +91,8 @@ async function CharacterPage({ params }: { params: Promise<{ id: string }> }) {
 						))}
 					</div>
 				</div>
+
+				<ScrollTop />
 			</div>
 		)
 	} catch {
