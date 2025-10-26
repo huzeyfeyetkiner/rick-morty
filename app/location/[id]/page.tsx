@@ -1,11 +1,8 @@
-import { getCharacter, getLocation } from "@/api/client"
+import { getLocation } from "@/api/client"
 import BackButton from "@/components/back-button"
-import EpisodeCard from "@/components/episode-card"
 import Resident from "@/components/resident"
 import ScrollTop from "@/components/scroll-top"
-import { Character } from "@/types/character"
 import { Location } from "@/types/location"
-import Image from "next/image"
 import { notFound } from "next/navigation"
 
 async function LocationPage({ params }: { params: Promise<{ id: string }> }) {
