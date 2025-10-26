@@ -11,7 +11,7 @@ import { Location, LocationAPIResponse, LocationFilter } from "@/types/location"
 import { useSearch } from "@/hooks/use-search"
 
 export default function LocationPage() {
-	const { searchTerm, filters, updateSearchTerm } = useSearch()
+	const { searchTerm, filters, updateSearchTerm, updateFilters } = useSearch()
 
 	const {
 		data,
@@ -56,8 +56,10 @@ export default function LocationPage() {
 			</div>
 			<FilterPart
 				onSearchChange={updateSearchTerm}
+				onFiltersChange={updateFilters}
 				placeholder="Search locations"
 				value={searchTerm}
+				filterType="locations"
 			/>
 
 			{isLoading && !error && (

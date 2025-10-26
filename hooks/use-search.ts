@@ -15,22 +15,29 @@ export interface SearchFilters {
 
 export function useSearch() {
 	const [searchTerm, setSearchTerm] = useState("")
+	const [advancedFilters, setAdvancedFilters] = useState<
+		Partial<SearchFilters>
+	>({})
 	const debouncedSearchTerm = useDebounce(searchTerm, 500)
 
 	const filters = useMemo(() => {
-		return debouncedSearchTerm ? { name: debouncedSearchTerm } : {}
-	}, [debouncedSearchTerm])
+		const baseFilters = debouncedSearchTerm
+			? { name: debouncedSearchTerm }
+			: {}
+		return { ...baseFilters, ...advancedFilters }
+	}, [debouncedSearchTerm, advancedFilters])
 
 	const updateSearchTerm = (term: string) => {
 		setSearchTerm(term)
 	}
 
 	const updateFilters = (newFilters: Partial<SearchFilters>) => {
-		console.log("Advanced filters:", newFilters)
+		setAdvancedFilters((prev) => ({ ...prev, ...newFilters }))
 	}
 
 	const clearFilters = () => {
 		setSearchTerm("")
+		setAdvancedFilters({})
 	}
 
 	return {

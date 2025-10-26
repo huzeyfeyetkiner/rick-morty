@@ -15,7 +15,7 @@ import LoadingIcon from "@/public/loading"
 import { useSearch } from "@/hooks/use-search"
 
 export default function Home() {
-	const { searchTerm, filters, updateSearchTerm } = useSearch()
+	const { searchTerm, filters, updateSearchTerm, updateFilters } = useSearch()
 
 	const {
 		data,
@@ -60,8 +60,10 @@ export default function Home() {
 			</div>
 			<FilterPart
 				onSearchChange={updateSearchTerm}
+				onFiltersChange={updateFilters}
 				placeholder="Search characters"
 				value={searchTerm}
+				filterType="characters"
 			/>
 
 			{isLoading && !error && (

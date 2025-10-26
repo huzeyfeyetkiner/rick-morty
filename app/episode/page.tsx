@@ -58,6 +58,7 @@ export default function EpisodePage() {
 				onSearchChange={updateSearchTerm}
 				placeholder="Search episodes"
 				value={searchTerm}
+				filterType="episodes"
 			/>
 
 			{isLoading && !error && (
