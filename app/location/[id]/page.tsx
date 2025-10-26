@@ -22,13 +22,13 @@ async function LocationPage({ params }: { params: Promise<{ id: string }> }) {
 			<div className="container mx-auto p-6 md:p-12">
 				<BackButton />
 
-				<div className="flex flex-col items-center gap-4">
+				<div className="md:max-w-200 mx-auto flex flex-col items-center md:items-start gap-4">
 					<h1 className="text-2xl font-normal text-[#081F32]">
 						{location?.name}
 					</h1>
 				</div>
 
-				<div className="max-w-96 grid grid-cols-2 gap-3 mx-auto py-5">
+				<div className="max-w-96 md:max-w-200 grid grid-cols-2 gap-3 mx-auto py-5">
 					<div>
 						<p className="text-xl text-[#081F32] font-bold">Type</p>
 						<p className="text-xl text-[#6E798C] font-bold">

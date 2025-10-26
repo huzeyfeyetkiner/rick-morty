@@ -43,7 +43,15 @@ export const getEpisodes = async (page: number) => {
 	}
 }
 
-export const getEpisode = async (episode: string) => {
+export const getEpisode = async (id: string) => {
+	try {
+		const response = await client.get(`/episode/${id}`)
+		return response.data
+	} catch (error) {
+		return error
+	}
+}
+export const getEpisodeByUrl = async (episode: string) => {
 	try {
 		const response = await axios.get(`${episode}`)
 		return response.data

@@ -1,8 +1,7 @@
 "use client"
 
-import { getEpisode } from "@/api/client"
+import { getEpisodeByUrl } from "@/api/client"
 import ChevronRight from "@/public/chevron-right"
-import { Episode } from "@/types/episode"
 
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
@@ -10,7 +9,7 @@ import Link from "next/link"
 function EpisodeCard({ episode }: { episode: string }) {
 	const { data: episodeData, isLoading } = useQuery({
 		queryKey: ["episode", episode],
-		queryFn: () => getEpisode(episode),
+		queryFn: () => getEpisodeByUrl(episode),
 	})
 
 	if (isLoading) {

@@ -35,7 +35,7 @@ async function CharacterPage({ params }: { params: Promise<{ id: string }> }) {
 					</h1>
 				</div>
 
-				<div className="w-80 flex flex-col items-start gap-3 mx-auto py-5">
+				<div className="max-w-96 md:max-w-200 flex flex-col items-start gap-3 mx-auto py-5">
 					<h2 className="text-2xl font-bold text-[#8E8E93]">
 						Informations
 					</h2>
@@ -94,7 +94,7 @@ async function CharacterPage({ params }: { params: Promise<{ id: string }> }) {
 					</div>
 				</div>
 
-				<div className="w-80 flex flex-col items-start gap-3 mx-auto py-5">
+				<div className="max-w-96 md:max-w-200 flex flex-col items-start gap-3 mx-auto py-5">
 					<h2 className="text-2xl font-bold text-[#8E8E93]">
 						Episodes
 					</h2>
