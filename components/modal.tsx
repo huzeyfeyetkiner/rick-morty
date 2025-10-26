@@ -14,7 +14,7 @@ function Modal({ children, onClose, open, title }: ModalProps) {
 	return (
 		<div
 			onClick={onClose}
-			className="absolute top-0 left-0 w-full h-full bg-black/50 z-50 flex items-center justify-center"
+			className="absolute top-0 left-0 w-full h-full bg-black/50 z-70 flex items-center justify-center"
 		>
 			<div
 				onClick={(e) => e.stopPropagation()}
