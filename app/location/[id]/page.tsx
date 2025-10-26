@@ -1,6 +1,6 @@
 import { getLocation } from "@/api/client"
 import BackButton from "@/components/back-button"
-import Resident from "@/components/resident"
+import CharacterGet from "@/components/character-get"
 import ScrollTop from "@/components/scroll-top"
 import { Location } from "@/types/location"
 import { notFound } from "next/navigation"
@@ -48,7 +48,7 @@ async function LocationPage({ params }: { params: Promise<{ id: string }> }) {
 					</h2>
 					<div className="grid  md:grid-cols-2 gap-3">
 						{location?.residents.map((resident) => (
-							<Resident key={resident} resident={resident} />
+							<CharacterGet key={resident} character={resident} />
 						))}
 					</div>
 				</div>

@@ -1,6 +1,6 @@
 import { getEpisode } from "@/api/client"
 import BackButton from "@/components/back-button"
-import Resident from "@/components/resident"
+import CharacterGet from "@/components/character-get"
 import ScrollTop from "@/components/scroll-top"
 import { Episode } from "@/types/episode"
 import { notFound } from "next/navigation"
@@ -47,7 +47,10 @@ async function EpisodePage({ params }: { params: Promise<{ id: string }> }) {
 					<h2 className="text-2xl font-bold text-[#8E8E93]">Cast</h2>
 					<div className="grid  md:grid-cols-2 gap-3">
 						{episode?.characters.map((character) => (
-							<Resident key={character} resident={character} />
+							<CharacterGet
+								key={character}
+								character={character}
+							/>
 						))}
 					</div>
 				</div>
