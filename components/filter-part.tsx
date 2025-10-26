@@ -4,6 +4,7 @@ import FilterIcon from "@/public/filter"
 import Input from "./input"
 import { useState } from "react"
 import Modal from "./modal"
+import Select from "./select"
 
 interface FilterPartProps {
 	onSearchChange?: (value: string) => void
@@ -17,6 +18,9 @@ function FilterPart({
 	value = "",
 }: FilterPartProps) {
 	const [isFilterOpen, setIsFilterOpen] = useState(false)
+	const [status, setStatus] = useState("")
+	const [species, setSpecies] = useState("")
+	const [gender, setGender] = useState("")
 
 	const onChangeHandler = (value: string) => {
 		onSearchChange?.(value)
@@ -46,7 +50,36 @@ function FilterPart({
 				onClose={() => setIsFilterOpen(false)}
 				title="Filters"
 			>
-				<p>Filter</p>
+				<div className="flex flex-col gap-2">
+					<Select
+						options={["alive", "dead", "unknown"]}
+						onChange={setStatus}
+						value={status}
+					/>
+					<Select
+						options={[
+							"human",
+							"alien",
+							"robot",
+							"animal",
+							"unknown",
+						]}
+						onChange={setSpecies}
+						value={species}
+					/>
+					<Select
+						options={["female", "male", "genderless", "unknown"]}
+						onChange={setGender}
+						value={gender}
+					/>
+
+					<button
+						onClick={() => setIsFilterOpen(false)}
+						className="bg-[#E3F2FD] text-[#2196F3] px-4 py-2 rounded-md shadow-card-3 w-full"
+					>
+						Apply Filters
+					</button>
+				</div>
 			</Modal>
 		</>
 	)

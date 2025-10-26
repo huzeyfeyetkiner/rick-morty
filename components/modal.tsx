@@ -18,9 +18,9 @@ function Modal({ children, onClose, open, title }: ModalProps) {
 		>
 			<div
 				onClick={(e) => e.stopPropagation()}
-				className="w-xs sm:w-sm h-9/12 mx-auto bg-white rounded-lg p-4 shadow-card-3"
+				className="w-xs sm:w-sm h-fit mx-auto bg-white rounded-lg px-4 py-5 shadow-card-3"
 			>
-				<div className="flex items-center justify-between">
+				<div className="flex items-center justify-between pb-4">
 					<h2 className="text-2xl font-bold">{title}</h2>
 					<button onClick={onClose} className="cursor-pointer">
 						<CloseIcon />
