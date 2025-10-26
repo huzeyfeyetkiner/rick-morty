@@ -21,8 +21,7 @@ export const getCharacter = async (id: string) => {
 		const response = await client.get(`/character/${id}`)
 		return response.data
 	} catch (error) {
-		console.error(error)
-		throw new Error("Failed to fetch character")
+		return error
 	}
 }
 
@@ -31,8 +30,7 @@ export const getEpisodes = async (page: number) => {
 		const response = await client.get(`/episode?page=${page}`)
 		return response.data
 	} catch (error) {
-		console.error(error)
-		throw new Error("Failed to fetch episodes")
+		return error
 	}
 }
 
@@ -41,8 +39,7 @@ export const getEpisode = async (episode: string) => {
 		const response = await axios.get(`${episode}`)
 		return response.data
 	} catch (error) {
-		console.error(error)
-		throw new Error("Failed to fetch episode")
+		return error
 	}
 }
 
@@ -51,12 +48,15 @@ export const getLocations = async (page: number) => {
 		const response = await client.get(`/location?page=${page}`)
 		return response.data
 	} catch (error) {
-		console.error(error)
-		throw new Error("Failed to fetch locations")
+		return error
 	}
 }
 
 export const getLocation = async (id: string) => {
-	const response = await client.get(`/location/${id}`)
-	return response.data
+	try {
+		const response = await client.get(`/location/${id}`)
+		return response.data
+	} catch (error) {
+		return error
+	}
 }
