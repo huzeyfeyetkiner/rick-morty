@@ -4,12 +4,19 @@ import { getCharacters } from "@/api/client"
 import CharacterCard from "@/components/character-card"
 import FilterPart from "@/components/filter-part"
 import LoadMore from "@/components/load-more"
-import { Character } from "@/types/character"
+import {
+	Character,
+	CharacterAPIResponse,
+	CharacterFilter,
+} from "@/types/character"
 import Image from "next/image"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import LoadingIcon from "@/public/loading"
+import { useSearch } from "@/hooks/use-search"
 
 export default function Home() {
+	const { searchTerm, filters, updateSearchTerm } = useSearch()
+
 	const {
 		data,
 		fetchNextPage,
@@ -18,40 +25,25 @@ export default function Home() {
 		isLoading,
 		error,
 	} = useInfiniteQuery({
-		queryKey: ["characters"],
-		queryFn: ({ pageParam = 1 }) => getCharacters(pageParam),
-		getNextPageParam: (lastPage) => {
-			return lastPage.info.next
-				? lastPage.info.next.split("page=")[1]
+		queryKey: ["characters", filters],
+		queryFn: ({ pageParam = 1 }) =>
+			getCharacters(Number(pageParam), filters as CharacterFilter),
+		getNextPageParam: (lastPage: CharacterAPIResponse) => {
+			return lastPage?.info?.next
+				? lastPage?.info?.next?.split("page=")[1]
 				: undefined
 		},
-		initialPageParam: 1,
+		initialPageParam: "1",
+		retry: 1,
 	})
 
-	const allCharacters = data?.pages.flatMap((page) => page.results) ?? []
+	const allCharacters =
+		data?.pages.flatMap((page: CharacterAPIResponse) => page.results) ?? []
 
 	const loadMoreCharacters = () => {
 		if (hasNextPage && !isFetchingNextPage) {
 			fetchNextPage()
 		}
-	}
-
-	if (isLoading) {
-		return (
-			<div className="flex justify-center min-h-screen ">
-				<LoadingIcon className="animate-spin" />
-			</div>
-		)
-	}
-
-	if (error) {
-		return (
-			<div className="flex justify-center items-center min-h-screen">
-				<div className="text-lg text-red-500">
-					Error loading characters
-				</div>
-			</div>
-		)
 	}
 
 	return (
@@ -66,10 +58,32 @@ export default function Home() {
 					/>
 				</div>
 			</div>
-			<FilterPart />
-			{allCharacters.map((character: Character) => (
-				<CharacterCard key={character.id} character={character} />
-			))}
+			<FilterPart
+				onSearchChange={updateSearchTerm}
+				placeholder="Search characters"
+				value={searchTerm}
+			/>
+
+			{isLoading && !error && (
+				<div className="col-span-full flex justify-center items-center py-4">
+					<LoadingIcon className="animate-spin w-24 h-24" />
+				</div>
+			)}
+
+			{!isLoading && allCharacters?.length === 0 && searchTerm && (
+				<div className="col-span-full flex justify-center items-center py-8">
+					<div className="text-lg text-gray-500">
+						No characters found
+					</div>
+				</div>
+			)}
+
+			{!error &&
+				allCharacters &&
+				allCharacters.length > 0 &&
+				allCharacters.map((character: Character) => (
+					<CharacterCard key={character.id} character={character} />
+				))}
 
 			{hasNextPage && (
 				<div className="col-span-full flex justify-center items-center">

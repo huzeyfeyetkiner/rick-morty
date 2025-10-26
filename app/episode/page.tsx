@@ -6,10 +6,13 @@ import LoadMore from "@/components/load-more"
 import Image from "next/image"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import LoadingIcon from "@/public/loading"
-import { Episode } from "@/types/episode"
+import { Episode, EpisodeAPIResponse, EpisodeFilter } from "@/types/episode"
 import EpisodeCard from "@/components/episode-card"
+import { useSearch } from "@/hooks/use-search"
 
 export default function EpisodePage() {
+	const { searchTerm, filters, updateSearchTerm } = useSearch()
+
 	const {
 		data,
 		fetchNextPage,
@@ -18,40 +21,25 @@ export default function EpisodePage() {
 		isLoading,
 		error,
 	} = useInfiniteQuery({
-		queryKey: ["episodes"],
-		queryFn: ({ pageParam = 1 }) => getEpisodes(pageParam),
-		getNextPageParam: (lastPage) => {
+		queryKey: ["episodes", filters],
+		queryFn: ({ pageParam = 1 }) =>
+			getEpisodes(Number(pageParam), filters as EpisodeFilter),
+		getNextPageParam: (lastPage: EpisodeAPIResponse) => {
 			return lastPage.info.next
 				? lastPage.info.next.split("page=")[1]
 				: undefined
 		},
-		initialPageParam: 1,
+		initialPageParam: "1",
+		retry: 1,
 	})
 
-	const allEpisodes = data?.pages.flatMap((page) => page.results) ?? []
+	const allEpisodes =
+		data?.pages.flatMap((page: EpisodeAPIResponse) => page.results) ?? []
 
 	const loadMoreEpisodes = () => {
 		if (hasNextPage && !isFetchingNextPage) {
 			fetchNextPage()
 		}
-	}
-
-	if (isLoading) {
-		return (
-			<div className="flex justify-center min-h-screen ">
-				<LoadingIcon className="animate-spin" />
-			</div>
-		)
-	}
-
-	if (error) {
-		return (
-			<div className="flex justify-center items-center min-h-screen">
-				<div className="text-lg text-red-500">
-					Error loading episodes
-				</div>
-			</div>
-		)
 	}
 
 	return (
@@ -66,10 +54,32 @@ export default function EpisodePage() {
 					/>
 				</div>
 			</div>
-			<FilterPart />
-			{allEpisodes.map((episode: Episode) => (
-				<EpisodeCard key={episode.id} episode={episode.url} />
-			))}
+			<FilterPart
+				onSearchChange={updateSearchTerm}
+				placeholder="Search episodes"
+				value={searchTerm}
+			/>
+
+			{isLoading && !error && (
+				<div className="col-span-full flex justify-center items-center py-4">
+					<LoadingIcon className="animate-spin w-24 h-24" />
+				</div>
+			)}
+
+			{!isLoading && allEpisodes?.length === 0 && searchTerm && (
+				<div className="col-span-full flex justify-center items-center py-8">
+					<div className="text-lg text-gray-500">
+						No episodes found
+					</div>
+				</div>
+			)}
+
+			{!error &&
+				allEpisodes &&
+				allEpisodes.length > 0 &&
+				allEpisodes.map((episode: Episode) => (
+					<EpisodeCard key={episode.id} episode={episode.url} />
+				))}
 
 			{hasNextPage && (
 				<div className="col-span-full flex justify-center items-center">

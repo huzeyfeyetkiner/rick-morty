@@ -7,9 +7,12 @@ import LoadMore from "@/components/load-more"
 import Image from "next/image"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import LoadingIcon from "@/public/loading"
-import { Location } from "@/types/location"
+import { Location, LocationAPIResponse, LocationFilter } from "@/types/location"
+import { useSearch } from "@/hooks/use-search"
 
 export default function LocationPage() {
+	const { searchTerm, filters, updateSearchTerm } = useSearch()
+
 	const {
 		data,
 		fetchNextPage,
@@ -18,40 +21,25 @@ export default function LocationPage() {
 		isLoading,
 		error,
 	} = useInfiniteQuery({
-		queryKey: ["locations"],
-		queryFn: ({ pageParam = 1 }) => getLocations(pageParam),
-		getNextPageParam: (lastPage) => {
+		queryKey: ["locations", filters],
+		queryFn: ({ pageParam = 1 }) =>
+			getLocations(Number(pageParam), filters as LocationFilter),
+		getNextPageParam: (lastPage: LocationAPIResponse) => {
 			return lastPage.info.next
 				? lastPage.info.next.split("page=")[1]
 				: undefined
 		},
-		initialPageParam: 1,
+		initialPageParam: "1",
+		retry: 1,
 	})
 
-	const allLocations = data?.pages.flatMap((page) => page.results) ?? []
+	const allLocations =
+		data?.pages.flatMap((page: LocationAPIResponse) => page.results) ?? []
 
 	const loadMoreLocations = () => {
 		if (hasNextPage && !isFetchingNextPage) {
 			fetchNextPage()
 		}
-	}
-
-	if (isLoading) {
-		return (
-			<div className="flex justify-center min-h-screen ">
-				<LoadingIcon className="animate-spin" />
-			</div>
-		)
-	}
-
-	if (error) {
-		return (
-			<div className="flex justify-center items-center min-h-screen">
-				<div className="text-lg text-red-500">
-					Error loading locations
-				</div>
-			</div>
-		)
 	}
 
 	return (
@@ -66,10 +54,32 @@ export default function LocationPage() {
 					/>
 				</div>
 			</div>
-			<FilterPart />
-			{allLocations.map((location: Location) => (
-				<LocationCard key={location.id} location={location} />
-			))}
+			<FilterPart
+				onSearchChange={updateSearchTerm}
+				placeholder="Search locations"
+				value={searchTerm}
+			/>
+
+			{isLoading && !error && (
+				<div className="col-span-full flex justify-center items-center py-4">
+					<LoadingIcon className="animate-spin w-24 h-24" />
+				</div>
+			)}
+
+			{!isLoading && allLocations?.length === 0 && searchTerm && (
+				<div className="col-span-full flex justify-center items-center py-8">
+					<div className="text-lg text-gray-500">
+						No locations found
+					</div>
+				</div>
+			)}
+
+			{!error &&
+				allLocations &&
+				allLocations.length > 0 &&
+				allLocations.map((location: Location) => (
+					<LocationCard key={location.id} location={location} />
+				))}
 
 			{hasNextPage && (
 				<div className="col-span-full flex justify-center items-center">

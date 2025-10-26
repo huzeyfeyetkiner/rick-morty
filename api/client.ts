@@ -1,4 +1,7 @@
 import axios from "axios"
+import { CharacterFilter, CharacterAPIResponse } from "@/types/character"
+import { EpisodeFilter, EpisodeAPIResponse } from "@/types/episode"
+import { LocationFilter, LocationAPIResponse } from "@/types/location"
 
 const client = axios.create({
 	baseURL: "https://rickandmortyapi.com/api",
@@ -6,12 +9,25 @@ const client = axios.create({
 
 export default client
 
-export const getCharacters = async (page: number) => {
+export const getCharacters = async (
+	page: number,
+	filters?: Partial<CharacterFilter>
+): Promise<CharacterAPIResponse> => {
 	try {
-		const response = await client.get(`/character?page=${page}`)
+		const params = new URLSearchParams({ page: page.toString() })
+
+		if (filters) {
+			Object.entries(filters).forEach(([key, value]) => {
+				if (value) {
+					params.append(key, value)
+				}
+			})
+		}
+
+		const response = await client.get(`/character?${params.toString()}`)
 		return response.data
 	} catch (error) {
-		console.error(error)
+		console.error("Error fetching characters:", error)
 		throw new Error("Failed to fetch characters")
 	}
 }
@@ -34,12 +50,26 @@ export const getCharacterByUrl = async (url: string) => {
 	}
 }
 
-export const getEpisodes = async (page: number) => {
+export const getEpisodes = async (
+	page: number,
+	filters?: Partial<EpisodeFilter>
+): Promise<EpisodeAPIResponse> => {
 	try {
-		const response = await client.get(`/episode?page=${page}`)
+		const params = new URLSearchParams({ page: page.toString() })
+
+		if (filters) {
+			Object.entries(filters).forEach(([key, value]) => {
+				if (value) {
+					params.append(key, value)
+				}
+			})
+		}
+
+		const response = await client.get(`/episode?${params.toString()}`)
 		return response.data
 	} catch (error) {
-		return error
+		console.error("Error fetching episodes:", error)
+		throw new Error("Failed to fetch episodes")
 	}
 }
 
@@ -60,12 +90,26 @@ export const getEpisodeByUrl = async (episode: string) => {
 	}
 }
 
-export const getLocations = async (page: number) => {
+export const getLocations = async (
+	page: number,
+	filters?: Partial<LocationFilter>
+): Promise<LocationAPIResponse> => {
 	try {
-		const response = await client.get(`/location?page=${page}`)
+		const params = new URLSearchParams({ page: page.toString() })
+
+		if (filters) {
+			Object.entries(filters).forEach(([key, value]) => {
+				if (value) {
+					params.append(key, value)
+				}
+			})
+		}
+
+		const response = await client.get(`/location?${params.toString()}`)
 		return response.data
 	} catch (error) {
-		return error
+		console.error("Error fetching locations:", error)
+		throw new Error("Failed to fetch locations")
 	}
 }
 

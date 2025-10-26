@@ -5,11 +5,21 @@ import Input from "./input"
 import { useState } from "react"
 import Modal from "./modal"
 
-function FilterPart() {
+interface FilterPartProps {
+	onSearchChange?: (value: string) => void
+	placeholder?: string
+	value?: string
+}
+
+function FilterPart({
+	onSearchChange,
+	placeholder = "Search",
+	value = "",
+}: FilterPartProps) {
 	const [isFilterOpen, setIsFilterOpen] = useState(false)
 
 	const onChangeHandler = (value: string) => {
-		console.log(value)
+		onSearchChange?.(value)
 	}
 
 	return (
@@ -18,7 +28,8 @@ function FilterPart() {
 				<div className="col-span-1 md:col-span-7">
 					<Input
 						onChange={onChangeHandler}
-						placeholder="Search characters"
+						placeholder={placeholder}
+						value={value}
 					/>
 				</div>
 
