@@ -7,6 +7,7 @@ import LoadMore from "@/components/load-more"
 import { Character } from "@/types/character"
 import Image from "next/image"
 import { useInfiniteQuery } from "@tanstack/react-query"
+import LoadingIcon from "@/public/loading"
 
 export default function Home() {
 	const {
@@ -37,8 +38,8 @@ export default function Home() {
 
 	if (isLoading) {
 		return (
-			<div className="flex justify-center items-center min-h-screen">
-				<div className="text-lg">Loading...</div>
+			<div className="flex justify-center min-h-screen ">
+				<LoadingIcon className="animate-spin" />
 			</div>
 		)
 	}
