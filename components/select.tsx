@@ -20,7 +20,7 @@ function Select({ options, onChange, value, placeholder }: SelectProps) {
 						{placeholder}
 					</option>
 				)}
-				{options.map((option) => (
+				{options?.map((option) => (
 					<option
 						className="text-black text-sm font-medium"
 						key={option}

@@ -78,9 +78,12 @@ export default function LocationPage() {
 
 			{!error &&
 				allLocations &&
-				allLocations.length > 0 &&
-				allLocations.map((location: Location) => (
-					<LocationCard key={location.id} location={location} />
+				allLocations?.length > 0 &&
+				allLocations?.map((location: Location, index: number) => (
+					<LocationCard
+						key={`${location?.id}-${location?.name}-${index}`}
+						location={location}
+					/>
 				))}
 
 			{hasNextPage && (

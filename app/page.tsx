@@ -82,10 +82,10 @@ export default function Home() {
 
 			{!error &&
 				allCharacters &&
-				allCharacters.length > 0 &&
-				allCharacters.map((character: Character) => (
+				allCharacters?.length > 0 &&
+				allCharacters?.map((character: Character, index: number) => (
 					<CharacterCard
-						key={`${character.id}-${character.name}`}
+						key={`${character?.id}-${character?.name}-${index}`}
 						character={character}
 					/>
 				))}

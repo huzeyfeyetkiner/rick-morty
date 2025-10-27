@@ -7,8 +7,9 @@ import Image from "next/image"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import LoadingIcon from "@/public/loading"
 import { Episode, EpisodeAPIResponse, EpisodeFilter } from "@/types/episode"
-import EpisodeCard from "@/components/episode-card"
+import EpisodeGet from "@/components/episode-get"
 import { useSearch } from "@/hooks/use-search"
+import EpisodeCard from "@/components/episode-card"
 
 export default function EpisodePage() {
 	const { searchTerm, filters, updateSearchTerm } = useSearch()
@@ -77,9 +78,12 @@ export default function EpisodePage() {
 
 			{!error &&
 				allEpisodes &&
-				allEpisodes.length > 0 &&
-				allEpisodes.map((episode: Episode) => (
-					<EpisodeCard key={episode.id} episode={episode.url} />
+				allEpisodes?.length > 0 &&
+				allEpisodes?.map((episode: Episode, index: number) => (
+					<EpisodeCard
+						key={`${episode?.id}-${episode?.name}-${index}`}
+						episode={episode}
+					/>
 				))}
 
 			{hasNextPage && (

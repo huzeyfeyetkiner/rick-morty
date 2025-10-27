@@ -17,7 +17,7 @@ function Input({ onChange, placeholder, value = "" }: InputProps) {
 				className="w-full p-2 pl-8 rounded-md border border-gray-300 outline-none ring-0 focus:ring-0 focus:outline-none"
 				placeholder={placeholder}
 				value={value}
-				onChange={(e) => onChange(e.target.value)}
+				onChange={(e) => onChange(e?.target?.value || "")}
 			/>
 		</div>
 	)

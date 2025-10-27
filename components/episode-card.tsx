@@ -1,43 +1,21 @@
-"use client"
-
-import { getEpisodeByUrl } from "@/api/client"
-import ChevronRight from "@/public/chevron-right"
-
-import { useQuery } from "@tanstack/react-query"
+import { Episode } from "@/types/episode"
 import Link from "next/link"
 
-function EpisodeCard({ episode }: { episode: string }) {
-	const { data: episodeData, isLoading } = useQuery({
-		queryKey: ["episode", episode],
-		queryFn: () => getEpisodeByUrl(episode),
-	})
-
-	if (isLoading) {
-		return (
-			<div className="w-full h-12 bg-gray-200 rounded-md animate-pulse" />
-		)
-	}
-
+function EpisodeCard({ episode }: { episode: Episode }) {
 	return (
 		<Link
-			href={`/episode/${episodeData?.id}`}
-			className="flex items-center justify-between"
+			href={`/episode/${episode.id}`}
+			className="w-full bg-white rounded-sm shadow-card-3 flex flex-col items-center justify-center p-10"
 		>
-			<div>
-				<h3 className="text-lg text-[#000000DE] font-medium">
-					{episodeData?.episode}
-				</h3>
-				<p className="text-sm text-[#00000099] font-medium">
-					{episodeData?.name}
-				</p>
-				<p className="text-sm text-[#00000099] font-medium">
-					{episodeData?.air_date}
-				</p>
-			</div>
-
-			<div>
-				<ChevronRight />
-			</div>
+			<h2 className="text-lg text-[#000000DE] font-medium text-center">
+				{episode?.name}
+			</h2>
+			<p className="text-sm text-[#00000099] font-medium text-center">
+				{episode?.air_date}
+			</p>
+			<p className="text-sm text-[#00000099] font-medium text-center">
+				{episode?.episode}
+			</p>
 		</Link>
 	)
 }
