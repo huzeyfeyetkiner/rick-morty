@@ -1,6 +1,6 @@
 import { getCharacter } from "@/api/client"
 import BackButton from "@/components/back-button"
-import EpisodeCard from "@/components/episode-card"
+import EpisodeGet from "@/components/episode-get"
 import ScrollTop from "@/components/scroll-top"
 import ChevronRight from "@/public/chevron-right"
 import { Character } from "@/types/character"
@@ -99,9 +99,14 @@ async function CharacterPage({ params }: { params: Promise<{ id: string }> }) {
 						Episodes
 					</h2>
 					<div className="px-2 divide-y divide-[#21212114] w-full space-y-3">
-						{character.episode.map((episode) => (
-							<EpisodeCard key={episode} episode={episode} />
-						))}
+						{character?.episode?.map(
+							(episode: string, index: number) => (
+								<EpisodeGet
+									key={`${episode}-${index}`}
+									episode={episode}
+								/>
+							)
+						)}
 					</div>
 				</div>
 

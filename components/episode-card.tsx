@@ -4,7 +4,7 @@ import Link from "next/link"
 function EpisodeCard({ episode }: { episode: Episode }) {
 	return (
 		<Link
-			href={`/episode/${episode.id}`}
+			href={`/episode/${episode?.id}`}
 			className="w-full bg-white rounded-sm shadow-card-3 flex flex-col items-center justify-center p-10"
 		>
 			<h2 className="text-lg text-[#000000DE] font-medium text-center">
