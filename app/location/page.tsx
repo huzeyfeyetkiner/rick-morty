@@ -25,9 +25,9 @@ export default function LocationPage() {
 		queryFn: ({ pageParam = 1 }) =>
 			getLocations(Number(pageParam), filters as LocationFilter),
 		getNextPageParam: (lastPage: LocationAPIResponse) => {
-			return lastPage.info.next
-				? lastPage.info.next.split("page=")[1]
-				: undefined
+			if (!lastPage?.info?.next) return undefined
+			const url = new URL(lastPage.info.next)
+			return url.searchParams.get("page")
 		},
 		initialPageParam: "1",
 		retry: 1,

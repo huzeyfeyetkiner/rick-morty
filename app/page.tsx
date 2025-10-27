@@ -29,9 +29,9 @@ export default function Home() {
 		queryFn: ({ pageParam = 1 }) =>
 			getCharacters(Number(pageParam), filters as CharacterFilter),
 		getNextPageParam: (lastPage: CharacterAPIResponse) => {
-			return lastPage?.info?.next
-				? lastPage?.info?.next?.split("page=")[1]
-				: undefined
+			if (!lastPage?.info?.next) return undefined
+			const url = new URL(lastPage.info.next)
+			return url.searchParams.get("page")
 		},
 		initialPageParam: "1",
 		retry: 1,
