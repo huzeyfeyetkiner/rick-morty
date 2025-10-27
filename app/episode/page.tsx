@@ -7,9 +7,9 @@ import Image from "next/image"
 import { useInfiniteQuery } from "@tanstack/react-query"
 import LoadingIcon from "@/public/loading"
 import { Episode, EpisodeAPIResponse, EpisodeFilter } from "@/types/episode"
-import EpisodeGet from "@/components/episode-get"
 import { useSearch } from "@/hooks/use-search"
 import EpisodeCard from "@/components/episode-card"
+import Loading from "@/components/loading"
 
 export default function EpisodePage() {
 	const { searchTerm, filters, updateSearchTerm } = useSearch()
@@ -62,11 +62,7 @@ export default function EpisodePage() {
 				filterType="episodes"
 			/>
 
-			{isLoading && !error && (
-				<div className="col-span-full flex justify-center items-center py-4">
-					<LoadingIcon className="animate-spin w-24 h-24" />
-				</div>
-			)}
+			{isLoading && !error && <Loading />}
 
 			{!isLoading && allEpisodes?.length === 0 && searchTerm && (
 				<div className="col-span-full flex justify-center items-center py-8">

@@ -1,19 +1,24 @@
 "use client"
+
 import HamburgerIcon from "@/public/hamburger"
 import HeaderIcon from "@/public/header-icon"
-import { useState } from "react"
+import { useState, useTransition } from "react"
 import Sheet from "./sheet"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import CloseIcon from "@/public/close-icon"
 
 function Header() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
+	const [isPending, startTransition] = useTransition()
 
 	const router = useRouter()
 
 	const handleMenuClick = (path: string) => {
-		setIsMenuOpen(false)
-		router.push(path)
+		startTransition(() => {
+			router.push(path)
+			setIsMenuOpen(false)
+		})
 	}
 
 	return (
@@ -49,29 +54,32 @@ function Header() {
 							}
 							className="cursor-pointer md:hidden"
 						>
-							<HamburgerIcon />
+							{isMenuOpen ? <CloseIcon /> : <HamburgerIcon />}
 						</button>
 					</div>
 				</div>
 			</div>
 
-			<Sheet open={isMenuOpen} onClose={() => setIsMenuOpen(false)}>
-				<div className="flex flex-col gap-2 items-center justify-center">
+			<Sheet open={isMenuOpen} isPending={isPending}>
+				<div className="flex flex-col gap-12 items-center justify-center">
 					<button
 						className="text-2xl font-bold"
 						onClick={() => handleMenuClick("/")}
+						disabled={isPending}
 					>
 						Characters
 					</button>
 					<button
 						className="text-2xl font-bold"
 						onClick={() => handleMenuClick("/location")}
+						disabled={isPending}
 					>
 						Locations
 					</button>
 					<button
 						className="text-2xl font-bold"
 						onClick={() => handleMenuClick("/episode")}
+						disabled={isPending}
 					>
 						Episodes
 					</button>

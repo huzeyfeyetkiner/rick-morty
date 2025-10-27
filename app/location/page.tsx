@@ -9,6 +9,7 @@ import { useInfiniteQuery } from "@tanstack/react-query"
 import LoadingIcon from "@/public/loading"
 import { Location, LocationAPIResponse, LocationFilter } from "@/types/location"
 import { useSearch } from "@/hooks/use-search"
+import Loading from "@/components/loading"
 
 export default function LocationPage() {
 	const { searchTerm, filters, updateSearchTerm, updateFilters } = useSearch()
@@ -62,11 +63,7 @@ export default function LocationPage() {
 				filterType="locations"
 			/>
 
-			{isLoading && !error && (
-				<div className="col-span-full flex justify-center items-center py-4">
-					<LoadingIcon className="animate-spin w-24 h-24" />
-				</div>
-			)}
+			{isLoading && !error && <Loading />}
 
 			{!isLoading && allLocations?.length === 0 && searchTerm && (
 				<div className="col-span-full flex justify-center items-center py-8">
