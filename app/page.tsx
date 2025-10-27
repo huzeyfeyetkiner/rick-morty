@@ -84,7 +84,10 @@ export default function Home() {
 				allCharacters &&
 				allCharacters.length > 0 &&
 				allCharacters.map((character: Character) => (
-					<CharacterCard key={character.id} character={character} />
+					<CharacterCard
+						key={`${character.id}-${character.name}`}
+						character={character}
+					/>
 				))}
 
 			{hasNextPage && (

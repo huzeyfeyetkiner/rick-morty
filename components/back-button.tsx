@@ -5,7 +5,7 @@ function BackButton() {
 	const router = useRouter()
 	return (
 		<button
-			className="w-full max-w-96 md:max-w-200 mx-auto flex items-center gap-2 pb-2"
+			className="w-full max-w-96 md:max-w-200 mx-auto flex items-center gap-2 pb-2 cursor-pointer"
 			onClick={() => router.back()}
 		>
 			<svg

@@ -10,7 +10,7 @@ function LoadMore({ onClick, loading = false }: LoadMoreProps) {
 		<button
 			onClick={onClick}
 			disabled={loading}
-			className="w-full max-w-40 bg-[#F2F9FE] text-[#2196F3] p-2 rounded-md shadow-card-3 disabled:opacity-50"
+			className="w-full max-w-40 bg-[#F2F9FE] text-[#2196F3] p-2 rounded-md shadow-card-3 disabled:opacity-50 cursor-pointer"
 		>
 			{loading ? "LOADING..." : "LOAD MORE"}
 		</button>
