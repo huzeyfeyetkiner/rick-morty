@@ -73,13 +73,15 @@ export default function Home() {
 				</div>
 			)}
 
-			{!isLoading && allCharacters?.length === 0 && searchTerm && (
-				<div className="col-span-full flex justify-center items-center py-8">
-					<div className="text-lg text-gray-500">
-						No characters found
+			{!isLoading &&
+				allCharacters?.length === 0 &&
+				(searchTerm || filters) && (
+					<div className="col-span-full flex justify-center items-center py-8">
+						<div className="text-lg text-gray-500">
+							No characters found
+						</div>
 					</div>
-				</div>
-			)}
+				)}
 
 			{!error &&
 				allCharacters &&

@@ -69,13 +69,15 @@ export default function LocationPage() {
 				</div>
 			)}
 
-			{!isLoading && allLocations?.length === 0 && searchTerm && (
-				<div className="col-span-full flex justify-center items-center py-8">
-					<div className="text-lg text-gray-500">
-						No locations found
+			{!isLoading &&
+				allLocations?.length === 0 &&
+				(searchTerm || filters) && (
+					<div className="col-span-full flex justify-center items-center py-8">
+						<div className="text-lg text-gray-500">
+							No locations found
+						</div>
 					</div>
-				</div>
-			)}
+				)}
 
 			{!error &&
 				allLocations &&

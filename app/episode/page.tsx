@@ -68,13 +68,15 @@ export default function EpisodePage() {
 				</div>
 			)}
 
-			{!isLoading && allEpisodes?.length === 0 && searchTerm && (
-				<div className="col-span-full flex justify-center items-center py-8">
-					<div className="text-lg text-gray-500">
-						No episodes found
+			{!isLoading &&
+				allEpisodes?.length === 0 &&
+				(searchTerm || filters) && (
+					<div className="col-span-full flex justify-center items-center py-8">
+						<div className="text-lg text-gray-500">
+							No episodes found
+						</div>
 					</div>
-				</div>
-			)}
+				)}
 
 			{!error &&
 				allEpisodes &&
