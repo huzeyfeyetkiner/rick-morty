@@ -62,7 +62,11 @@ export default function EpisodePage() {
 				filterType="episodes"
 			/>
 
-			{isLoading && !error && <Loading />}
+			{isLoading && !error && (
+				<div className="col-span-full flex justify-center items-center py-8">
+					<Loading />
+				</div>
+			)}
 
 			{!isLoading && allEpisodes?.length === 0 && searchTerm && (
 				<div className="col-span-full flex justify-center items-center py-8">
