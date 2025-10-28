@@ -1,5 +1,5 @@
 import CloseIcon from "@/public/close-icon"
-import React from "react"
+import React, { useEffect } from "react"
 
 interface ModalProps {
 	children: React.ReactNode
@@ -9,12 +9,20 @@ interface ModalProps {
 }
 
 function Modal({ children, onClose, open, title }: ModalProps) {
+	useEffect(() => {
+		if (open) {
+			document.body.style.overflow = "hidden"
+		} else {
+			document.body.style.overflow = "unset"
+		}
+	}, [open])
+
 	if (!open) return null
 
 	return (
 		<div
 			onClick={onClose}
-			className="absolute top-0 left-0 w-full h-full bg-black/50 z-70 flex items-center justify-center"
+			className="fixed top-0 left-0 w-full h-full bg-black/50 z-70 flex items-center justify-center"
 		>
 			<div
 				onClick={(e) => e.stopPropagation()}
